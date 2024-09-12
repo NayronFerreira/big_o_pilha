@@ -10,103 +10,123 @@ func main() {
 
 	stack := Stack{}
 
-	stack.push(2)
-	stack.push(5)
-	stack.push(9)
+	stack.push(1)
 	stack.push(10)
 	stack.push(20)
 	stack.push(30)
 	stack.push(40)
 	stack.push(50)
+	stack.push(60)
+	stack.push(70)
+	stack.push(80)
+	stack.push(90)
 
-	fmt.Println("Pilha after push`s")
-	for _, e := range stack.elements { //Complexidade de tempo Big O(n)
+	fmt.Println("Stack after pushs")
+	for _, e := range stack.elements {
 		fmt.Println(e)
 	}
 
-	fmt.Println("Peek: ", stack.peek()) // Complexidade de tempo Big O(1) constante
+	fmt.Println("Pop: ", stack.pop())
+	fmt.Println("Pop: ", stack.pop())
+	fmt.Println("Pop: ", stack.pop())
+	fmt.Println("Pop: ", stack.pop())
 
-	stack.pop()
-	stack.pop()
-	stack.pop()
-
-	fmt.Println("Pilha after pop`s")
-	for _, e := range stack.elements { //Complexidade de tempo Big O(n)
+	fmt.Println("Stack after pops")
+	for _, e := range stack.elements {
 		fmt.Println(e)
 	}
 
 	fmt.Println("Peek: ", stack.peek())
+	fmt.Println("largest: ", stack.largestNum())
+	fmt.Println("smallest: ", stack.smallestNum())
+	fmt.Println("sum: ", stack.sum())
 
-	fmt.Println("Sum: ", stack.sum())
-	fmt.Println("LargestNum: ", stack.largestNum())
-	fmt.Println("SmallestNum: ", stack.smallestNum())
 }
 
-func (m *Stack) pop() (element int) {
+// verifica se a pilha esta vazia
+func (m *Stack) isEmpty() bool {
+	return len(m.elements) == 0 //Complexidade espaco tempo Big O(1)
+}
 
-	if len(m.elements) == 0 { //Complexidade de tempo Big O(1) constante
+// Retorna e remove o topo
+func (m *Stack) pop() (retVal int) {
+
+	if m.isEmpty() { //Complexidade espaco tempo Big O(1) constante
 		return 0
 	}
 
-	lastElement := len(m.elements) - 1    //Complexidade de tempo Big O(1) constante
-	element = m.elements[lastElement]     //Complexidade de tempo Big O(1) constante
-	m.elements = m.elements[:lastElement] //Complexidade de tempo Big O(1) constante
+	lastElement := len(m.elements) - 1    //Complexidade espaco tempo Big O(1) constante
+	retVal = m.elements[lastElement]      //Complexidade espaco tempo Big O(1) constante
+	m.elements = m.elements[:lastElement] //Complexidade espaco tempo Big O(1) constante
 
-	return element
+	return retVal
 }
 
-func (m *Stack) push(element int) {
-	m.elements = append(m.elements, element) //Complexidade de tempo Big O(1) constante
-}
-
-func (m *Stack) largestNum() (num int) {
-	if len(m.elements) == 0 { //Complexidade de tempo Big O(1) constante
-		return 0
-	}
-
-	num = m.elements[0] //Complexidade de tempo Big O(1) constante
-
-	for _, e := range m.elements { //Complexidade de tempo Big O(n)
-		if e > num {
-			num = e
-		}
-	}
-
-	return num
-}
-
-func (m *Stack) smallestNum() (result int) {
-	if len(m.elements) == 0 { //Complexidade de tempo Big O(1) constante
-		return 0
-	}
-
-	result = m.elements[0] //Complexidade de tempo Big O(1) constante
-
-	for _, e := range m.elements { //Complexidade de tempo Big O(n)
-		if e < result {
-			result = e
-		}
-	}
-
-	return result
-}
-
-func (m *Stack) sum() (result int) {
-	if len(m.elements) == 0 { //Complexidade de tempo Big O(1) constante
-		return 0
-	}
-
-	for _, e := range m.elements { //Complexidade de temp Big O(n) Tempo Linear
-		result += e
-	}
-
-	return result
-}
-
+// Retorna o topo
 func (m *Stack) peek() (retVal int) {
-	if len(m.elements) == 0 {
+	if m.isEmpty() { //Complexidade espaco tempo Big O(1) constante
 		return 0
 	}
 
-	return m.elements[len(m.elements)-1]
+	lastElement := len(m.elements) - 1 //Complexidade espaco tempo Big O(1) constante
+	retVal = m.elements[lastElement]   //Complexidade espaco tempo Big O(1) constante
+
+	return retVal
+}
+
+// adiciona elemento ao topo
+func (m *Stack) push(element int) {
+	m.elements = append(m.elements, element) //Complexidade espaco tempo Big O(1) constante
+}
+
+// retorna o tamanho da pilha
+func (m *Stack) size() (retVal int) {
+	return len(m.elements) //Complexidade espaco tempo Big O(1) constante
+}
+
+// Retorna o maior valor da Lista
+func (m *Stack) largestNum() (retVal int) {
+	if m.isEmpty() { //Complexidade espaco tempo Big O(1) constante
+		return 0
+	}
+
+	retVal = m.elements[0] //Complexidade espaco tempo Big O(1) constante
+
+	for _, e := range m.elements { //Complexidade espaco tempo Big O(n) linear
+		if e > retVal {
+			retVal = e
+		}
+	}
+
+	return retVal
+}
+
+// Retorna o menor valor da Lista
+func (m *Stack) smallestNum() (retVal int) {
+	if m.isEmpty() { //Complexidade espaco tempo Big O(1) constante
+		return 0
+	}
+
+	retVal = m.elements[0] //Complexidade espaco tempo Big O(1) constante
+
+	for _, e := range m.elements { //Complexidade espaco tempo Big O(n) linear
+		if e < retVal {
+			retVal = e
+		}
+	}
+
+	return retVal
+}
+
+// retorna a soma dos itens da pilha
+func (m *Stack) sum() (retVal int) {
+	if m.isEmpty() { //Complexidade espaco tempo Big O(1) constante
+		return 0
+	}
+
+	for _, e := range m.elements { //Complexidade espaco tempo Big O(n) linear
+		retVal += e
+	}
+
+	return retVal
 }
